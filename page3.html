@@ -179,279 +179,181 @@
         </div>
     </div>
 
-    <script>
-        // Image gallery data
-        const images = [
-            './assets/images/love1.jpeg',
-            './assets/images/love2.jpeg',
-            './assets/images/love3.jpeg',
-            './assets/images/love4.jpeg',
-            './assets/images/love5.jpeg'
-        ];
+   <script>
+    const images = [
+        './assets/images/love1.jpeg',
+        './assets/images/love2.jpeg',
+        './assets/images/love3.jpeg',
+        './assets/images/love4.jpeg',
+        './assets/images/love5.jpeg'
+    ];
 
-        let currentImageIndex = 0;
-        let noButtonAttempts = 0;
+    let currentImageIndex = 0;
+    let noButtonAttempts = 0;
 
-        // DOM Elements
-        const yesBtn = document.getElementById('yesBtn');
-        const noBtn = document.getElementById('noBtn');
-        const testMessage = document.getElementById('testMessage');
-        const valentineContent = document.getElementById('valentineContent');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const currentImage = document.getElementById('currentImage');
-        const imageNumber = document.getElementById('imageNumber');
-        const totalImages = document.getElementById('totalImages');
-        const imageModal = document.getElementById('imageModal');
-        const modalImage = document.getElementById('modalImage');
-        const closeModal = document.getElementById('closeModal');
-        const romanticMusic = document.getElementById('romanticMusic');
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const testMessage = document.getElementById('testMessage');
+    const valentineContent = document.getElementById('valentineContent');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const currentImage = document.getElementById('currentImage');
+    const imageNumber = document.getElementById('imageNumber');
+    const totalImages = document.getElementById('totalImages');
+    const imageModal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const closeModal = document.getElementById('closeModal');
+    const romanticMusic = document.getElementById('romanticMusic');
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function () {
-            // Set total images count
-            totalImages.textContent = images.length;
+    document.addEventListener('DOMContentLoaded', function () {
 
-            // Yes button click handler
-            yesBtn.addEventListener('click', function () {
-                showLoveResponse(true);
-            });
+        totalImages.textContent = images.length;
 
-            // No button click handler - with escape behavior
-            noBtn.addEventListener('click', function (e) {
-                e.preventDefault();
-                handleNoButtonClick();
-            });
-
-            // No button hover handler - make it run away
-            noBtn.addEventListener('mouseenter', function () {
-                moveNoButton();
-            });
-
-            // No button touch handler for mobile
-            noBtn.addEventListener('touchstart', function (e) {
-                e.preventDefault();
-                moveNoButton();
-            });
-
-            // Gallery event listeners
-            prevBtn.addEventListener('click', showPreviousImage);
-            nextBtn.addEventListener('click', showNextImage);
-            currentImage.addEventListener('click', openModal);
-            closeModal.addEventListener('click', closeModalHandler);
-            imageModal.addEventListener('click', function (e) {
-                if (e.target === imageModal) {
-                    closeModalHandler();
-                }
-            });
-
-            // Keyboard navigation
-            document.addEventListener('keydown', function (e) {
-                if (!imageModal.classList.contains('hidden')) {
-                    if (e.key === 'Escape') {
-                        closeModalHandler();
-                    } else if (e.key === 'ArrowLeft') {
-                        showPreviousImage();
-                        updateModalImage();
-                    } else if (e.key === 'ArrowRight') {
-                        showNextImage();
-                        updateModalImage();
-                    }
-                } else if (!valentineContent.classList.contains('hidden')) {
-                    if (e.key === 'ArrowLeft') {
-                        showPreviousImage();
-                    } else if (e.key === 'ArrowRight') {
-                        showNextImage();
-                    }
-                }
-            });
+        yesBtn.addEventListener('click', function () {
+            showLoveResponse();
         });
 
-        // Handle love response
-        function showLoveResponse(isReady) {
-            const questionCard = document.querySelector('.question-card');
+        // Desktop click
+        noBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            handleNoButtonClick(false);
+        });
 
-            if (isReady) {
-                // 🎵 Play romantic music
-                romanticMusic.volume = 0.7; // Set to 30% volume
-                romanticMusic.play().catch(e => {
-                    console.log('Audio play prevented:', e);
-                    // Some browsers require user interaction before playing audio
-                });
+        // Mobile touch
+        noBtn.addEventListener('touchstart', function (e) {
+            e.preventDefault();
+            handleNoButtonClick(true);
+        });
 
-                testMessage.innerHTML = '<p>मला आधीच माहित होतं! 💖 तू आणि मी — कायमचं, सदैव एकत्र! आता आपल्या सुंदर भविष्याची सुरुवात करूया... ✨</p>';
-                testMessage.style.display = 'block';
-                testMessage.style.color = '#ff1744';
+        noBtn.addEventListener('mouseenter', function () {
+            moveNoButton();
+        });
 
-                setTimeout(() => {
-                    // Hide the test and show valentine content
-                    questionCard.style.display = 'none';
-                    valentineContent.classList.remove('hidden');
-                    valentineContent.style.opacity = '0';
+        prevBtn.addEventListener('click', showPreviousImage);
+        nextBtn.addEventListener('click', showNextImage);
+        currentImage.addEventListener('click', openModal);
+        closeModal.addEventListener('click', closeModalHandler);
 
-                    setTimeout(() => {
-                        valentineContent.style.opacity = '1';
-                        valentineContent.style.transition = 'opacity 1.5s ease-in';
-                    }, 100);
-                }, 2000);
-            }
-        }
+        imageModal.addEventListener('click', function (e) {
+            if (e.target === imageModal) closeModalHandler();
+        });
+    });
 
-        // Handle No button click - make it run away
-        function handleNoButtonClick() {
-            noButtonAttempts++;
+    function showLoveResponse() {
+
+        romanticMusic.volume = 0.7;
+        romanticMusic.play().catch(() => { });
+
+        testMessage.innerHTML = 
+        '<p>मला आधीच माहित होतं! 💖 तू आणि मी — कायमचं, सदैव एकत्र! ✨</p>';
+
+        testMessage.style.display = 'block';
+        testMessage.style.color = '#ff1744';
+
+        setTimeout(() => {
+            document.querySelector('.question-card').style.display = 'none';
+            valentineContent.classList.remove('hidden');
+            valentineContent.style.opacity = '1';
+        }, 2000);
+    }
+
+    function handleNoButtonClick(isTouch = false) {
+
+        noButtonAttempts++;
+
+        // 📳 Progressive vibration (Android only)
+        if (isTouch && 'vibrate' in navigator) {
 
             if (noButtonAttempts === 1) {
-                testMessage.innerHTML = '<p>अरे वा! थोडे नखरे चालतील 😉 पण खरं उत्तर माहित आहे ना तुला? 💕</p>';
-                testMessage.style.display = 'block';
-                testMessage.style.color = '#e91e63';
-            } else if (noButtonAttempts === 2) {
-                testMessage.innerHTML = '<p>इतकं लाजू नकोस 😄 माझ्यासोबतचं forever खूप सुंदर असणार आहे! 💖</p>';
-                testMessage.style.display = 'block';
-                testMessage.style.color = '#f50057';
-            } else if (noButtonAttempts >= 3) {
-                testMessage.innerHTML = '<p>बस आता! 😆 आपल्या प्रेमापासून पळून जाता येणार नाही. मी "होय"च समजते! 💍💞</p>';
-                testMessage.style.display = 'block';
-                testMessage.style.color = '#ff1744';
-
-                // Auto-select yes after 3 attempts
-                // setTimeout(() => {
-                //     showLoveResponse(true);
-                // }, 1500);
+                navigator.vibrate(80);
             }
-
-            // Move the button away
-            moveNoButton();
-        }
-
-        // Move No button away from cursor
-        function moveNoButton() {
-            // 📳 Trigger vibration when button escapes
-            if ('vibrate' in navigator) {
-                // Vibrate for 100ms - short buzz indicating escape
-                navigator.vibrate(100);
+            else if (noButtonAttempts === 2) {
+                navigator.vibrate([100, 50, 100]);
             }
-
-            const container = document.querySelector('.button-container');
-            const containerRect = container.getBoundingClientRect();
-
-            // Random position within container but away from center
-            const maxX = containerRect.width - 150;
-            const maxY = containerRect.height - 60;
-
-            let newX, newY;
-
-            // Try to place it in a corner or edge
-            const corners = [
-                { x: 10, y: 10 },
-                { x: maxX - 10, y: 10 },
-                { x: 10, y: maxY - 10 },
-                { x: maxX - 10, y: maxY - 10 }
-            ];
-
-            const randomCorner = corners[Math.floor(Math.random() * corners.length)];
-            newX = randomCorner.x;
-            newY = randomCorner.y;
-
-            noBtn.style.position = 'absolute';
-            noBtn.style.left = newX + 'px';
-            noBtn.style.top = newY + 'px';
-            noBtn.style.transition = 'all 0.3s ease';
-
-            // Add a little animation
-            noBtn.style.transform = 'scale(0.8) rotate(' + (Math.random() * 20 - 10) + 'deg)';
-
-            setTimeout(() => {
-                noBtn.style.transform = 'scale(1) rotate(0deg)';
-            }, 300);
+            else if (noButtonAttempts === 3) {
+                navigator.vibrate([150, 50, 150, 50, 150]);
+            }
+            else {
+                navigator.vibrate([200, 50, 200, 50, 200, 50, 300]);
+            }
         }
 
-        // Image gallery functions
-        function showPreviousImage() {
-            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-            updateImage();
+        if (noButtonAttempts === 1) {
+            testMessage.innerHTML = 
+            '<p>अरे वा! थोडे नखरे चालतील 😉 पण खरं उत्तर माहित आहे ना तुला? 💕</p>';
+        }
+        else if (noButtonAttempts === 2) {
+            testMessage.innerHTML = 
+            '<p>इतकं लाजू नकोस 😄 forever खूप सुंदर असणार आहे! 💖</p>';
+        }
+        else if (noButtonAttempts === 3) {
+            testMessage.innerHTML = 
+            '<p>हम्म्म 😏 अजूनही नाही? आता vibration वाढणार आहे! 📳</p>';
+        }
+        else {
+            testMessage.innerHTML = 
+            '<p>बस आता! 😆 आपल्या प्रेमापासून पळून जाता येणार नाही! 💍💞</p>';
         }
 
-        function showNextImage() {
-            currentImageIndex = (currentImageIndex + 1) % images.length;
-            updateImage();
-        }
+        testMessage.style.display = 'block';
 
-        function updateImage() {
-            currentImage.style.opacity = '0';
+        moveNoButton();
+    }
 
-            setTimeout(() => {
-                currentImage.src = images[currentImageIndex];
-                imageNumber.textContent = currentImageIndex + 1;
-                currentImage.style.opacity = '1';
-            }, 300);
-        }
+    function moveNoButton() {
 
-        // Modal functions
-        function openModal() {
-            modalImage.src = images[currentImageIndex];
-            imageModal.classList.remove('hidden');
-            setTimeout(() => {
-                imageModal.classList.add('visible');
-            }, 10);
-        }
+        const container = document.querySelector('.button-container');
+        const containerRect = container.getBoundingClientRect();
+        const btnRect = noBtn.getBoundingClientRect();
 
-        function closeModalHandler() {
-            imageModal.classList.remove('visible');
-            setTimeout(() => {
-                imageModal.classList.add('hidden');
-            }, 300);
-        }
+        const maxX = containerRect.width - btnRect.width;
+        const maxY = containerRect.height - btnRect.height;
 
-        function updateModalImage() {
-            modalImage.src = images[currentImageIndex];
-        }
+        const newX = Math.random() * maxX;
+        const newY = Math.random() * maxY;
 
-        // Floating hearts animation
-        const hearts = document.querySelectorAll('.heart');
-        hearts.forEach((heart, index) => {
-            heart.style.setProperty('--i', index);
-        });
+        noBtn.style.position = 'absolute';
+        noBtn.style.left = newX + 'px';
+        noBtn.style.top = newY + 'px';
+        noBtn.style.transition = 'all 0.3s ease';
+    }
 
-        // Create random floating hearts
-        function createRandomHeart() {
-            const heartEmojis = ['❤️', '💕', '💖', '💗', '💝', '🌹', '💘', '💞'];
-            const heart = document.createElement('div');
-            heart.innerHTML = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
-            heart.className = 'random-heart';
-            heart.style.cssText = `
-                position: fixed;
-                font-size: ${Math.random() * 20 + 15}px;
-                left: ${Math.random() * 100}%;
-                bottom: -50px;
-                opacity: ${Math.random() * 0.5 + 0.5};
-                animation: floatHeart ${Math.random() * 3 + 5}s linear;
-                pointer-events: none;
-                z-index: 1;
-            `;
+    function showPreviousImage() {
+        currentImageIndex =
+            (currentImageIndex - 1 + images.length) % images.length;
+        updateImage();
+    }
 
-            document.body.appendChild(heart);
+    function showNextImage() {
+        currentImageIndex =
+            (currentImageIndex + 1) % images.length;
+        updateImage();
+    }
 
-            setTimeout(() => {
-                if (heart.parentNode) {
-                    heart.parentNode.removeChild(heart);
-                }
-            }, 8000);
-        }
+    function updateImage() {
+        currentImage.style.opacity = '0';
 
-        // Create random hearts periodically
-        setInterval(createRandomHeart, 2000);
+        setTimeout(() => {
+            currentImage.src = images[currentImageIndex];
+            imageNumber.textContent = currentImageIndex + 1;
+            currentImage.style.opacity = '1';
+        }, 300);
+    }
 
-        // Add click effects to promise cards
-        document.querySelectorAll('.promise-card').forEach(card => {
-            card.addEventListener('click', function () {
-                this.style.animation = 'pulse 0.5s ease';
-                setTimeout(() => {
-                    this.style.animation = '';
-                }, 500);
-            });
-        });
-    </script>
+    function openModal() {
+        modalImage.src = images[currentImageIndex];
+        imageModal.classList.remove('hidden');
+        imageModal.classList.add('visible');
+    }
+
+    function closeModalHandler() {
+        imageModal.classList.remove('visible');
+        setTimeout(() => {
+            imageModal.classList.add('hidden');
+        }, 300);
+    }
+</script>
+
 
     <style>
         * {
@@ -1107,11 +1009,6 @@
                 max-width: 200px;
             }
 
-            .no-btn {
-                position: relative !important;
-                left: auto !important;
-                top: auto !important;
-            }
 
             .promises-grid {
                 grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
