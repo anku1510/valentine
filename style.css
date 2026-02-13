@@ -1,0 +1,328 @@
+/* Valentine's Special Styles */
+
+/* CSS Variables for Valentine's Theme */
+:root {
+    --valentine-primary: #ff69b4;
+    --valentine-secondary: #ff1493;
+    --valentine-accent: #ff69b4;
+    --valentine-dark: #ff1493;
+    --valentine-light: #ffe4e1;
+    --gradient-valentine-1: linear-gradient(135deg, #ffb6c1 0%, #ffc0cb 25%, #dda0dd 50%, #f8b8d0 75%, #ffe4e1 100%);
+    --gradient-valentine-2: linear-gradient(135deg, #ffc0cb 0%, #ffb6c1 25%, #dda0dd 50%, #f8b8d0 75%, #ffe4e1 100%);
+    --gradient-valentine-3: linear-gradient(135deg, #ffe4e1 0%, #ffc0cb 25%, #ffb6c1 50%, #dda0dd 75%, #f8b8d0 100%);
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    overflow-x: hidden;
+    background: var(--gradient-valentine-1);
+    min-height: 100vh;
+    transition: opacity 0.5s ease;
+}
+
+h1, h2, h3 {
+    font-family: 'Dancing Script', cursive;
+}
+
+/* Common Components */
+.valentine-badge {
+    display: inline-block;
+    background: linear-gradient(45deg, var(--valentine-accent), var(--valentine-secondary));
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(255,23,68,0.3);
+    animation: fadeInDown 1s ease-out 0.2s both;
+}
+
+.badge-text {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.valentine-btn {
+    background: linear-gradient(45deg, var(--valentine-primary), var(--valentine-accent));
+    color: white;
+    border: none;
+    padding: 1.5rem 3rem;
+    font-size: 1.3rem;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 15px 40px rgba(255,105,180,0.3);
+    transition: all 0.3s ease;
+    animation: pulse 2s infinite;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.valentine-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.valentine-btn:hover::before {
+    left: 100%;
+}
+
+.valentine-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 20px 50px rgba(255,105,180,0.4);
+}
+
+/* Card Styles */
+.valentine-card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.valentine-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+}
+
+/* Floating Hearts */
+.floating-hearts {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    animation: float 3s ease-in-out infinite;
+    z-index: 2;
+}
+
+.heart {
+    font-size: 2rem;
+    animation: heartFloat 2s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.2s);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-20px);
+    }
+}
+
+@keyframes heartFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(10deg);
+    }
+}
+
+@keyframes particleFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translateY(-30px) rotate(180deg);
+        opacity: 1;
+    }
+}
+
+@keyframes floatHeart {
+    0% {
+        bottom: -50px;
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: translateX(30px) rotate(10deg);
+    }
+    100% {
+        bottom: 100vh;
+        transform: translateX(-30px) rotate(-10deg);
+        opacity: 0;
+    }
+}
+
+@keyframes petalFall {
+    0% {
+        top: -10px;
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    25% {
+        transform: translateX(20px) rotate(90deg);
+    }
+    50% {
+        transform: translateX(-20px) rotate(180deg);
+    }
+    75% {
+        transform: translateX(30px) rotate(270deg);
+    }
+    100% {
+        top: 100%;
+        transform: translateX(-30px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes clickBurst {
+    0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(2) rotate(180deg);
+        opacity: 0;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 2.5rem;
+    }
+    
+    .valentine-btn {
+        padding: 1.2rem 2rem;
+        font-size: 1.1rem;
+    }
+    
+    .valentine-card {
+        padding: 1.5rem;
+    }
+}
+
+/* Page Specific Styles */
+
+/* Page 1: Start Screen */
+.start-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: var(--gradient-valentine-1);
+}
+
+/* Page 2: Love Messages */
+.love-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: var(--gradient-valentine-2);
+}
+
+/* Page 3: Surprises */
+.surprise-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: var(--gradient-valentine-3);
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.mb-2 {
+    margin-bottom: 2rem;
+}
+
+.mt-2 {
+    margin-top: 2rem;
+}
+
+.hidden {
+    display: none;
+}
+
+.fade-in {
+    animation: fadeIn 1s ease-out;
+}
+
+.fade-in-up {
+    animation: fadeInUp 1s ease-out;
+}
+
+.fade-in-down {
+    animation: fadeInDown 1s ease-out;
+}
