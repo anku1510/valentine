@@ -296,27 +296,55 @@
         }
 
         testMessage.style.display = 'block';
+        document.querySelector('.button-container').style.minHeight = "180px";
 
         moveNoButton();
     }
 
     function moveNoButton() {
 
-        const container = document.querySelector('.button-container');
-        const containerRect = container.getBoundingClientRect();
-        const btnRect = noBtn.getBoundingClientRect();
+    const container = document.querySelector('.button-container');
+    const containerRect = container.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
 
-        const maxX = containerRect.width - btnRect.width;
-        const maxY = containerRect.height - btnRect.height;
+    const maxX = containerRect.width - btnRect.width;
+    const maxY = containerRect.height - btnRect.height;
 
-        const newX = Math.random() * maxX;
-        const newY = Math.random() * maxY;
+    const newX = Math.random() * maxX;
+    const newY = Math.random() * maxY;
 
-        noBtn.style.position = 'absolute';
-        noBtn.style.left = newX + 'px';
-        noBtn.style.top = newY + 'px';
-        noBtn.style.transition = 'all 0.3s ease';
+    noBtn.style.position = 'absolute';
+    noBtn.style.left = newX + 'px';
+    noBtn.style.top = newY + 'px';
+    noBtn.style.transition = 'all 0.25s ease';
+
+    // 🚨 DANGER VIBRATION (Android only)
+    if ('vibrate' in navigator) {
+
+        if (noButtonAttempts === 1) {
+            navigator.vibrate(120);
+        }
+
+        else if (noButtonAttempts === 2) {
+            navigator.vibrate([150, 50, 150]);
+        }
+
+        else if (noButtonAttempts === 3) {
+            navigator.vibrate([200, 50, 200, 50, 200]);
+        }
+
+        else {
+            // FULL DANGER MODE 😆🔥
+            navigator.vibrate([
+                300, 80,
+                300, 80,
+                400, 100,
+                500
+            ]);
+        }
     }
+}
+
 
     function showPreviousImage() {
         currentImageIndex =
@@ -1018,6 +1046,19 @@
                 flex-direction: column;
                 gap: 1rem;
             }
+
+            .button-container {
+    position: relative;
+    min-height: 120px; /* bigger space for movement */
+}
+
+/* Prevent overlap on mobile */
+@media (max-width: 768px) {
+    .button-container {
+        min-height: 160px;
+    }
+}
+
         }
     </style>
 </body>
